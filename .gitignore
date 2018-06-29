@@ -102,3 +102,11 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Vscode
+.vscode
+
+# Django
+.vs
+
+migrations

@@ -17,11 +17,10 @@ def get_file(request):
             Juncao.objects.all().delete()
             linhas = []
             for line in file:
-                linhas.append(line.decode('utf-8'))
+                linhas.append(line.decode('utf-8', errors='replace'))
                 # input()
-            for linha in linhas[1:]:
-                l = [x.replace('"', '') if isinstance(x, str) else x
-                     for x in linha.split(',')]
+            for linha in linhas:
+                l = [x for x in linha.split(';')]
                 j = Juncao()
 
                 j.vsatname = l[0]
@@ -59,10 +58,11 @@ def get_file(request):
 
                 j.save()
                 print(j)
-                print(l)
-                input()
+                # print(l)
+                # input()
             return HttpResponse('/thanks/')
     else:
         form = FileForm()
 
     return render(request, 'file.html', {'form': form})
+

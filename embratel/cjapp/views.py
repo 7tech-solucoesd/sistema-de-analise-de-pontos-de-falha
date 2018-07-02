@@ -81,6 +81,21 @@ def get_pontos_ipgw(request):
     return filtra_juncao(request, f)
 
 
+@csrf_exempt
+def get_pontos_category(request):
+
+    def f(juncoes):
+        dist = {}
+        for j in juncoes:
+            if j.category in dist.keys():
+                dist[j.category] += 1
+            else:
+                dist[j.category] = 1
+        return dist
+
+    return filtra_juncao(request, f)
+
+
 def filtra_juncao(request, funcao):
     if request.method == 'POST':
         n_juncoes = json.loads(request.body.decode('utf-8'))

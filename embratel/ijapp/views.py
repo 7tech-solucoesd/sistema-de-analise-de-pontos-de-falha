@@ -56,7 +56,6 @@ def get_file(request):
                 j.DDR = l[31]
 
                 j.save()
-                print(j)
                 # print(l)
                 # input()
             return HttpResponse('/thanks/')
@@ -64,3 +63,56 @@ def get_file(request):
         form = FileForm()
 
     return render(request, 'file.html', {'form': form})
+
+
+@staff_member_required
+def get_file_bdn(request):
+    if request.method == 'POST':
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = request.FILES['file']
+            if file is None:
+                return HttpResponse('invalid')
+            Juncao.objects.all().delete()
+            linhas = []
+            for line in file:
+                linhas.append(line.decode('utf-8', errors='replace'))
+                # input()
+            for linha in linhas:
+                l = [x for x in linha.split(';')]
+                j = BDN()
+
+                j.jc_agen = l[0]
+                j.jc_BDN = l[1]
+                j.nome_BDN = l[2]
+                j.UF = l[3]
+                j.meio_titular = l[4]
+                j.backup = l[5]
+                j.id_num = l[6]
+                j.ip_BDN = l[7]
+                j.masc_BDN = [8]
+                j.gateway_BDN = l[9]
+                j.loop_back = l[10]
+                j.VMAC = l[11]
+                j.ip_vlan_internet = l[12]
+                j.categoria_bradesco = l[13]
+                j.juncao = l[14]
+                j.vsat = l[15]
+                j.category = l[16]
+                j.serial = l[17]
+                j.IP = l[18]
+                j.DNCC = l[19]
+                j.IPGW = l[20]
+                j.HUB = l[21]
+                j.LoadBalance = l[22]
+                j.categori = l[23]
+                j.vsat = l[24]
+                j.serial = l[25]
+                j.IP = l[26]
+
+                j.save()
+            return HttpResponse('/thanks/')
+    else:
+        form = FileForm()
+
+    return render(request, 'filebdn.html', {'form': form})

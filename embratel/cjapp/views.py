@@ -1,5 +1,4 @@
 import json
-from django.shortcuts import render
 from django.http import HttpResponse
 from ijapp.models import Juncao
 from django.views.decorators.csrf import csrf_exempt
@@ -103,7 +102,7 @@ def filtra_juncao(request, funcao):
         for j in n_juncoes:
             jun = Juncao.objects.filter(vsatname__contains='{}'.format(
                 str(j).zfill(4))).first()
-            if not jun is None:
+            if jun is not None:
                 juncoes.append(jun)
 
         dist = funcao(juncoes)
@@ -113,3 +112,52 @@ def filtra_juncao(request, funcao):
             'dados': dist
         }
     return HttpResponse(json.dumps(d))
+
+
+def filtra_bdn(request, funcao):
+    if request.method == 'POST':
+        n_juncoes = json.loads(request.body.decode('utf-8'))
+        juncoes = []
+        for j in n_juncoes:
+            jun = Juncao.objects.filter(vsatname__contains='{}'.format(
+                str(j).zfill(5))).first()
+            if jun is not None:
+                juncoes.append(jun)
+
+        dist = funcao(juncoes)
+
+        d = {
+            'total': len(juncoes),
+            'dados': dist
+        }
+    return HttpResponse(json.dumps(d))
+
+
+@csrf_exempt
+def get_pontos_dncc(request):
+
+    def f(juncoes):
+        dist = {}
+        for j in juncoes:
+            if j.DNCC in dist.keys():
+                dist[j.DNCC] += 1
+            else:
+                dist[j.DNCC] = 1
+        return dist
+
+    return filtra_bdn(request, f)
+
+
+@csrf_exempt
+def get_pontos_hub(request):
+
+    def f(juncoes):
+        dist = {}
+        for j in juncoes:
+            if j.HUB in dist.keys():
+                dist[j.DNCC] += 1
+            else:
+                dist[j.HUB] = 1
+        return dist
+
+    return filtra_bdn(request, f)

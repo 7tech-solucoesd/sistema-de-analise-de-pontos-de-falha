@@ -1,6 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% block content %}
-    <h1>Importa Junçao</h1>
+    <h1>Importa BDNs</h1>
     <form action="/admin/import/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}

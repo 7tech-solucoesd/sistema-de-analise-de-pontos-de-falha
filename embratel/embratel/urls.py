@@ -16,9 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from ijapp.views import get_file
-from cjapp.views import get_juncao, get_pontos_uf, get_pontos_ipgw
+from cjapp.views import (get_juncao, get_pontos_uf, get_pontos_ipgw,
+                         get_pontos_hub, get_pontos_category, get_pontos_dncc)
 
 urlpatterns = [
+    path('api/getpontosdncc', get_pontos_dncc),
+    path('api/getpontoscategory', get_pontos_category),
+    path('api/getpontoshub', get_pontos_hub),
     path('api/getpontosipgw', get_pontos_ipgw),
     path('api/getpontosuf', get_pontos_uf),
     path('api/getjuncao/<juncao>', get_juncao),

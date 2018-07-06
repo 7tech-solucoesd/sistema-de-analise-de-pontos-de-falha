@@ -6,6 +6,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
+
+def index (request):
+    template = loader.get_template('cjapp/templates/index.html')
+    return HttpResponse(template.render(context, request))
+
+
+
 def get_juncao(request, juncao):
     j = Juncao.objects.filter(
         vsatname__contains='{}'.format(juncao.zfill(4))).first()

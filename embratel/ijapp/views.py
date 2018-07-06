@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
-from .models import Juncao
+from .models import Juncao,BDN
 from .forms import FileForm
 
 
@@ -19,7 +19,7 @@ def get_file(request):
                 linhas.append(line.decode('utf-8', errors='replace'))
                 # input()
             for linha in linhas:
-                l = [x for x in linha.split(';')]
+                l = [x for x in linha.split(',')]
                 j = Juncao()
 
                 j.vsatname = l[0]
@@ -56,7 +56,7 @@ def get_file(request):
                 j.DDR = l[31]
 
                 j.save()
-                # print(l)
+                print(l)
                 # input()
             return HttpResponse('/thanks/')
     else:
@@ -73,7 +73,7 @@ def get_file_bdn(request):
             file = request.FILES['file']
             if file is None:
                 return HttpResponse('invalid')
-            Juncao.objects.all().delete()
+            BDN.objects.all().delete()
             linhas = []
             for line in file:
                 linhas.append(line.decode('utf-8', errors='replace'))
@@ -109,7 +109,7 @@ def get_file_bdn(request):
                 j.vsat = l[24]
                 j.serial = l[25]
                 j.IP = l[26]
-
+                print(l)
                 j.save()
             return HttpResponse('/thanks/')
     else:

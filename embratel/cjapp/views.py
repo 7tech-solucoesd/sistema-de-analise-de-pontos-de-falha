@@ -1,6 +1,6 @@
 import json
 from django.http import HttpResponse
-from ijapp.models import Juncao
+from ijapp.models import Juncao,BDN
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -96,6 +96,7 @@ def get_pontos_category(request):
 
 
 def filtra_juncao(request, funcao):
+    # print(request,end=" ---------------------")
     if request.method == 'POST':
         n_juncoes = json.loads(request.body.decode('utf-8'))
         juncoes = []
@@ -114,31 +115,12 @@ def filtra_juncao(request, funcao):
     return HttpResponse(json.dumps(d))
 
 
-def filtra_bdn(request, funcao):
-    if request.method == 'POST':
-        n_juncoes = json.loads(request.body.decode('utf-8'))
-        juncoes = []
-        for j in n_juncoes:
-            jun = Juncao.objects.filter(vsatname__contains='{}'.format(
-                str(j).zfill(5))).first()
-            if jun is not None:
-                juncoes.append(jun)
-
-        dist = funcao(juncoes)
-
-        d = {
-            'total': len(juncoes),
-            'dados': dist
-        }
-    return HttpResponse(json.dumps(d))
-
-
 @csrf_exempt
 def get_pontos_dncc(request):
 
-    def f(juncoes):
+    def f(bdns):
         dist = {}
-        for j in juncoes:
+        for j in bdns:
             if j.DNCC in dist.keys():
                 dist[j.DNCC] += 1
             else:
@@ -151,13 +133,31 @@ def get_pontos_dncc(request):
 @csrf_exempt
 def get_pontos_hub(request):
 
-    def f(juncoes):
+    def f(bdns):
         dist = {}
-        for j in juncoes:
+        for j in bdns:
             if j.HUB in dist.keys():
-                dist[j.DNCC] += 1
+                dist[j.HUB] += 1
             else:
                 dist[j.HUB] = 1
         return dist
 
     return filtra_bdn(request, f)
+
+def filtra_bdn(request, funcao):
+    if request.method == 'POST':
+        n_bdn = json.loads(request.body.decode('utf-8'))
+        bdns = []
+        for j in n_bdn:
+            jun = BDN.objects.filter(jc_BDN__contains='{}'.format(
+                str(j).zfill(5))).first()
+            if jun is not None:
+                bdns.append(jun)
+
+        dist = funcao(bdns)
+
+        d = {
+            'total': len(bdns),
+            'dados': dist
+        }
+    return HttpResponse(json.dumps(d))

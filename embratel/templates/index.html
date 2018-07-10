@@ -4,6 +4,7 @@
 	<head>
 		<title>EMBRATEL</title>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/juncao.css' %}" />
 		<meta charset="UTF-8" />
 	</head>
 	<body>
@@ -13,10 +14,12 @@
 					<div class="header-img-container" ><img class="header-logo" src="{% static "img/logo.png" %}" /></div>
 				</div>
 				<div class="menu">
-					<div class="menu-item active" >Junções</div>
-					<div class="menu-item" >Equipamentos</div>
-					<div class="menu-item" >Relatórios</div>
-					<input type="text" name="busca" class="menu-busca" />
+					<div class="menu-input">
+						<input type="text" name="busca" class="menu-busca" placeholder="Pesquisa rápida por Unidades, serviços, etc." />
+					</div>
+					<div onclick="Page.get('juncao')" class="menu-item active" >Junções</div>
+					<div onclick="Page.get('equipamentos')" class="menu-item" >Equipamentos</div>
+					<div onclick="Page.get('relatorios')" class="menu-item" >Relatórios</div>
 				</div>
 			</div>
 			<div id="main" class="main-container" >
@@ -29,5 +32,6 @@
 		<script src="{% static 'js/default.js' %}"></script>
 		<script src="{% static 'js/page.js' %}"></script>
 		<script src="{% static 'js/helpers.js' %}"></script>
+		<script src="{% static 'controllers/juncao.js' %}"></script>
 	</body>
 </html>

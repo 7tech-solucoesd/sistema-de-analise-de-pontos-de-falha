@@ -35,13 +35,13 @@ var Juncao = {
 	 */
 	showDados: function(juncao){
 
-		var html = $('<div data-juncao="' + juncao.junserviço + '" class="juncao">\
+		var html = $('<tr data-juncao="' + juncao.junserviço + '" class="juncao">\
 			\
-		</div>');
+		</tr>');
 
 		Object.keys(juncao).forEach(function(key){
-
-			html.append('<div data-key="' + key + '"><div class="head">' + key + '</div><div class="content">' + juncao[key] +'&nbsp; </div></div>');
+			
+			html.append('<td data-key="' + key + '"><div class="head">' + key + '</div><div class="content">' + juncao[key] +'&nbsp; </div></td>');
 
 		});
 

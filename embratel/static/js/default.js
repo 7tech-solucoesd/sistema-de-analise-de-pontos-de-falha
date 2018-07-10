@@ -24,6 +24,10 @@ $(function(){
 
                     if(typeof Juncao.currentJuncao.error === 'undefined'){
 
+                        if(Juncao.arrIdJuncao.find( id => {return id == JSON.parse(res).junserviço})){
+                            return;
+                        }
+
                         Juncao.arrIdJuncao.push(Juncao.currentJuncao.junserviço);
 
                         Juncao.arrJuncao.push(JSON.parse(res));

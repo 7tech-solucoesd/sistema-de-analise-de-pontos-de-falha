@@ -1,13 +1,17 @@
+.juncao-div{
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
 .juncao{
     border: 1px solid #000;
-    margin: 5px 1.3%;
-    display: inline-block;
-    width: 30%;
+    margin: 5px 0px;
+    width: 100%;
+    white-space: nowrap;
 }
 
 .juncao div[data-key]{
     display: inline-block;
-    width: 50%;
     vertical-align: top;
 }
 
@@ -17,14 +21,100 @@
 }*/
 
 
-.juncao div[data-key] .head{
+.juncao td div{
+    padding: 5px;
+}
+
+.juncao td[data-key] .head{
     background: #355c9f;
     color: #fff;
     border: 1px solid #000;
 }
 
-.juncao div[data-key] .content{
+.juncao td[data-key] .content{
     background: #fff;
     color: #000;
     border: 1px solid #000;
+}
+
+.juncao div[data-key=vsatname]{
+    width: 100px;
+}
+.juncao div[data-key=nmd]{
+
+}
+.juncao div[data-key=ender]{
+
+}
+.juncao div[data-key=municipio]{
+
+}
+.juncao div[data-key=UF]{
+
+}
+.juncao div[data-key=junserviço]{
+
+}
+.juncao div[data-key=compart]{
+
+}
+.juncao div[data-key=desc]{
+
+}
+.juncao div[data-key=nomeserv]{
+
+}
+.juncao div[data-key=fone]{
+
+}
+.juncao div[data-key=primeid]{
+
+}
+.juncao div[data-key=category]{
+
+}
+.juncao div[data-key=serial]{
+
+}
+.juncao div[data-key=softprof]{
+
+}
+.juncao div[data-key=devicetype]{
+
+}
+.juncao div[data-key=ipmgmt]{
+
+}
+.juncao div[data-key=iplan1]{
+
+}
+.juncao div[data-key=mask]{
+
+}
+.juncao div[data-key=servplan]{
+
+}
+.juncao div[data-key=AIS]{
+
+}
+.juncao div[data-key=OutrouteGroup]{
+
+}
+.juncao div[data-key=FAP]{
+
+}
+.juncao div[data-key=IPGW]{
+
+}
+.juncao div[data-key=ipipgw]{
+
+}
+.juncao div[data-key=IQos]{
+
+}
+.juncao div[data-key=IQosnum]{
+
+}
+.juncao div[data-key=DDR]{
+
 }

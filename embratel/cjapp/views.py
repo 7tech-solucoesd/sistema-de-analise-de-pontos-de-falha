@@ -58,6 +58,44 @@ def get_juncao(request, juncao):
     }
     return HttpResponse(json.dumps(d))
 
+def get_BDN(request, bdn):
+    j = BDN.objects.filter(
+        jc_BDN__contains='{}'.format(bdn.zfill(5))).first()
+    if j is None:
+        return HttpResponse(json.dumps({
+            'error': 'Nao pertence a Primisys'
+        }))
+    d = {
+        'jc_agen': j.jc_agen,
+        'jc_BDN': j.jc_BDN,
+        'nome_BDN': j.nome_BDN,
+        'UF': j.UF,
+        'meio_titular': j.meio_titular,
+        'backup': j.backup,
+        'id_num': j.id_num,
+        'ip_BDN': j.ip_BDN,
+        'masc_BDN': j.masc_BDN,
+        'gateway_BDN': j.gateway_BDN,
+        'loop_back': j.loop_back,
+        'VMAC': j.VMAC,
+        'ip_vlan_internet': j.ip_vlan_internet,
+        'categoria_bradesco': j.categoria_bradesco,
+        'juncao': j.juncao,
+        'vsat': j.vsat,
+        'category': j.category,
+        'serial': j.serial,
+        'IP': j.IP,
+        'DNCC': j.DNCC,
+        'IPGW': j.IPGW,
+        'HUB': j.HUB,
+        'LoadBalance': j.LoadBalance,
+        'categori': j.categori,
+        'vsat': j.vsat,
+        'serial': j.serial,
+        'IP': j.IP,
+    }
+    return HttpResponse(json.dumps(d))
+
 
 @csrf_exempt
 def get_pontos_uf(request):

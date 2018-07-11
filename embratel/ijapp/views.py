@@ -19,7 +19,7 @@ def get_file(request):
                 linhas.append(line.decode('utf-8', errors='replace'))
                 # input()
             for linha in linhas:
-                l = [x for x in linha.split(',')]
+                l = [x for x in linha.split(';')]
                 j = Juncao()
 
                 j.vsatname = l[0]

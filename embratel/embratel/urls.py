@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from ijapp.views import get_file,get_file_bdn
 from cjapp.views import (get_juncao, get_pontos_uf, get_pontos_ipgw,
-                         get_pontos_hub, get_pontos_category, get_pontos_dncc, index)
+                         get_pontos_hub, get_pontos_category, get_pontos_dncc,
+                         index,get_BDN)
 
 urlpatterns = [
     path('api/getpontosdncc', get_pontos_dncc),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('api/getpontoshub', get_pontos_hub),
     path('api/getpontosipgw', get_pontos_ipgw),
     path('api/getpontosuf', get_pontos_uf),
+    path('api/getBDN/<bdn>',get_BDN),
     path('api/getjuncao/<juncao>', get_juncao),
     path('admin/import2/', get_file_bdn),
     path('admin/import/', get_file),

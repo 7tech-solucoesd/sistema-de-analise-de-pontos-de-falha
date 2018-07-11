@@ -5,6 +5,7 @@
 		<title>EMBRATEL</title>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/juncao.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/relatorio.css' %}" />
 		<meta charset="UTF-8" />
 	</head>
 	<body>
@@ -19,7 +20,7 @@
 					</div>
 					<div onclick="Page.get('juncao')" class="menu-item active" >Junções</div>
 					<div onclick="Page.get('equipamentos')" class="menu-item" >Equipamentos</div>
-					<div onclick="Page.get('relatorios')" class="menu-item" >Relatórios</div>
+					<div onclick="Page.get('relatorio')" class="menu-item" >Relatórios</div>
 				</div>
 			</div>
 			<div id="main" class="main-container" >
@@ -33,5 +34,6 @@
 		<script src="{% static 'js/page.js' %}"></script>
 		<script src="{% static 'js/helpers.js' %}"></script>
 		<script src="{% static 'controllers/juncao.js' %}"></script>
+		<script src="{% static 'controllers/relatorio.js' %}"></script>
 	</body>
 </html>

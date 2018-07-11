@@ -25,8 +25,10 @@ $(function(){
                     if(typeof Juncao.currentJuncao.error === 'undefined'){
 
                         if(Juncao.arrIdJuncao.find( id => {
-                            return Number(id) == Number(JSON.parse(res).vsatname.replace(/[^0-9]/g,''))
-                        }));
+                            return Number(id) == Number(JSON.parse(res).vsatname.replace(/[^0-9]/g,''));
+                        })){
+                            return;
+                        }
 
                         Juncao.arrIdJuncao.push(Juncao.currentJuncao.vsatname.replace(/[^0-9]/g,''));
 

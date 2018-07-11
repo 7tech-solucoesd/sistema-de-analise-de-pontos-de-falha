@@ -24,11 +24,11 @@ $(function(){
 
                     if(typeof Juncao.currentJuncao.error === 'undefined'){
 
-                        if(Juncao.arrIdJuncao.find( id => {return id == JSON.parse(res).junserviço})){
-                            return;
-                        }
+                        if(Juncao.arrIdJuncao.find( id => {
+                            return Number(id) == Number(JSON.parse(res).vsatname.replace(/[^0-9]/g,''))
+                        }));
 
-                        Juncao.arrIdJuncao.push(Juncao.currentJuncao.junserviço);
+                        Juncao.arrIdJuncao.push(Juncao.currentJuncao.vsatname.replace(/[^0-9]/g,''));
 
                         Juncao.arrJuncao.push(JSON.parse(res));
 

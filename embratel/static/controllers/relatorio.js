@@ -9,28 +9,36 @@ var Relatorio = {
 
     onrender: function(){
 
-        Relatorio.getRelatoriosJunc();
-
-        Relatorio.updateCharts();
+        Relatorio.getRelatoriosJunc().then(function(){
+            console.log('xxxx');
+            Relatorio.updateCharts();
+        });
 
     },
 
     getRelatoriosJunc: function(){
 
-        Relatorio.juncUrls.forEach(el => {
-            
-            Relatorio.request(el.url, Juncao.arrIdJuncao).then(res => {
+        return new Promise(function(resolve, reject){
+            Relatorio.juncUrls.forEach((el,index) => {
                 
-                Relatorio.chartData.push({
-                    name: el.name,
-                    data: JSON.parse(res).dados,
-                    total: JSON.parse(res).total
-                });
+                Relatorio.request(el.url, Juncao.arrIdJuncao).then(res => {
+                    
+                    Relatorio.chartData.push({
+                        name: el.name,
+                        data: JSON.parse(res).dados,
+                        total: JSON.parse(res).total
+                    });
 
-            }).catch(error => {
-                console.error(error);
-            })
+                    if(index+1 === Relatorio.juncUrls.length) resolve();
 
+                }).catch(error => {
+
+                    if(index+1 === Relatorio.juncUrls.length) resolve();
+
+                    console.error(error);
+                })
+
+            });
         });
 
     },

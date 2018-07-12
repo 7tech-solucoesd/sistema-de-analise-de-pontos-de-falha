@@ -9,6 +9,14 @@ var Relatorio = {
 
     onrender: function(){
 
+        Relatorio.getRelatoriosJunc();
+
+        Relatorio.updateCharts();
+
+    },
+
+    getRelatoriosJunc: function(){
+
         Relatorio.juncUrls.forEach(el => {
             
             Relatorio.request(el.url, Juncao.arrIdJuncao).then(res => {
@@ -35,6 +43,46 @@ var Relatorio = {
             data: JSON.stringify(array)
         });
 
+    },
+
+    updateCharts: function(){
+        Relatorio.chartData.forEach(el => {
+
+            var dados = [];
+
+            Object.keys(el.data).forEach(e => {
+                dados.push(el.data[e]);
+            });
+
+            var ctx = $('#'+el.name).get(0).getContext('2d');
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(el.data),
+                    datasets: [{
+                        label: 'Junções',
+                        data: dados,
+                        backgroundColor: Helpers.poolColors(dados.length || 1)
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+
+        });
     }
 
 }

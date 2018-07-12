@@ -8,10 +8,14 @@ var Juncao = {
 
 	onrender: function(){
 
-		Juncao.arrJuncao = [];
-		
-		Juncao.arrIdJuncao = [];
+		Juncao.renderJuncoes();
 
+	},
+
+	renderJuncoes: function(){
+		Juncao.arrJuncao.forEach(juncao => {
+			Juncao.showDados(juncao);
+		});
 	},
 
 	/**

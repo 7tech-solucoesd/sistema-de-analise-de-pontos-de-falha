@@ -10,13 +10,14 @@ var Relatorio = {
     onrender: function(){
 
         Relatorio.getRelatoriosJunc().then(function(){
-            console.log('xxxx');
             Relatorio.updateCharts();
         });
 
     },
 
     getRelatoriosJunc: function(){
+        
+        Relatorio.chartData = [];
 
         return new Promise(function(resolve, reject){
             Relatorio.juncUrls.forEach((el,index) => {

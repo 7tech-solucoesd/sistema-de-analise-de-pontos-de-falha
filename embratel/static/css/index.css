@@ -87,3 +87,22 @@ body{
 	height: auto;
 	margin: 0 auto;
 }
+
+.clear-all{
+	display: none;
+	background: #1e3763;
+	color: #fff;
+	border-radius: 15px;
+	padding: 20px;
+	font-size: 1.2em;
+	border: 0px;
+	box-shadow: 2px 2px 8px #000;
+	margin: 5px;
+}
+
+.link-to-adm{
+	display: block;
+    color: #fff;
+    float: right;
+    padding: 10px;
+}

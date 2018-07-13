@@ -8,6 +8,13 @@ var Juncao = {
 
 	onrender: function(){
 
+		$('.active').removeClass('active');
+        $('[data-page=juncao]').addClass('active');
+
+		if(Juncao.arrJuncao.length || Juncao.arrIdJuncao.length){
+			$('.initial-text').hide();
+		}
+
 		Juncao.renderJuncoes();
 
 	},
@@ -38,13 +45,16 @@ var Juncao = {
 	 * @param {Number} juncao id da junção que será exibida
 	 */
 	showDados: function(juncao){
-
+		$('.initial-text').hide();
+		$('.clear-all').show();
 		var html = $('<tr data-juncao="' + juncao.junserviço + '" class="juncao">\
 			\
 		</tr>');
 
 		Object.keys(juncao).forEach(function(key){
 			
+			if(key === 'Enable' || key === 'vadb' || key === 'vadb1' || key === 'vadb2' || key === 'DDR') return;
+
 			html.append('<td data-key="' + key + '"><div class="head">' + key + '</div><div class="content">' + juncao[key] +'&nbsp; </div></td>');
 
 		});

@@ -90,7 +90,7 @@ def get_file_bdn(request):
                 j.backup = l[5]
                 j.id_num = l[6]
                 j.ip_BDN = l[7]
-                j.masc_BDN = [8]
+                j.masc_BDN = l[8]
                 j.gateway_BDN = l[9]
                 j.loop_back = l[10]
                 j.VMAC = l[11]

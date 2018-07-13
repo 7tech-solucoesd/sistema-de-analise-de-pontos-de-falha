@@ -132,6 +132,14 @@ var Relatorio = {
             });
 
         });
+    },
+
+    getPDF: function(){
+        $('.header').hide();
+        $('.get-pdf').hide();
+        window.print();
+        $('.header').show();
+        $('.get-pdf').show();
     }
 
 }

@@ -25,10 +25,9 @@ body{
 }
 
 .header-img-container{
-	background: #fff;
 	height: 95%;
 	float: left;
-	margin-left: 2px;
+	margin-left: 50px;
 }
 
 .header-logo{

@@ -56,7 +56,7 @@ def get_file(request):
                 j.DDR = l[31]
 
                 j.save()
-                print(l)
+                # print(l)
                 # input()
             return HttpResponse('/thanks/')
     else:
@@ -109,7 +109,7 @@ def get_file_bdn(request):
                 j.vsat = l[24]
                 j.serial = l[25]
                 j.IP = l[26]
-                print(l)
+                # print(l)
                 j.save()
             return HttpResponse('/thanks/')
     else:

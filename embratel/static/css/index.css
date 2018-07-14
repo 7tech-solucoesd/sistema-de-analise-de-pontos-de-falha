@@ -8,7 +8,7 @@ body{
 
 .header{
 	height: 100px;
-	background: #355c9f;
+	background: #1e3763;
 	padding: 2px 5px;
 }
 
@@ -27,7 +27,7 @@ body{
 .header-img-container{
 	height: 95%;
 	float: left;
-	margin-left: 50px;
+	margin-left: 30px;
 }
 
 .header-logo{
@@ -71,7 +71,7 @@ body{
 
 .menu-item:hover{
 	cursor: pointer;
-	background: #1e3763;
+	background: #355c9f;
 	transition: 0.2s all;
 	margin-top: 5px;
 }
@@ -91,17 +91,39 @@ body{
 	display: none;
 	background: #1e3763;
 	color: #fff;
-	border-radius: 15px;
-	padding: 20px;
+	border-radius: 10px;
+	padding: 10px;
 	font-size: 1.2em;
-	border: 0px;
-	box-shadow: 2px 2px 8px #000;
-	margin: 5px;
+	border: 10px;
+	box-shadow: 2px 2px 2px #000;
+	margin-left: 32px;
+	margin-top: 8px;
 }
 
 .link-to-adm{
 	display: block;
-    color: #fff;
-    float: right;
-    padding: 10px;
+  	color: #fff;
+  	float: right;
+  	padding: 10px;
+	color: #fff;
+	border-radius: 10px;
+	padding: 10px;
+	font-size: 1.2em;
+	border: 10px;
+	box-shadow: 2px 2px 8px #000;
+	margin: 10px;
+}
+
+.link-to-adm:hover{
+	cursor: pointer;
+	background: #355c9f;
+	transition: 0.1s all;
+  	float: right;
+	color: #fff;
+	border-radius: 10px;
+	padding: 10px;
+	font-size: 1.2em;
+	border: 10px;
+	box-shadow: 2px 2px 15px #000;
+	margin: 10px;
 }

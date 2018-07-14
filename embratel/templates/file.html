@@ -1,11 +1,13 @@
 {% extends "admin/base_site.html" %}
 {% block content %}
-    <h1>Importa Junçao</h1>
+    <h1>Importar Junção</h1>
     <form action="/admin/import/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit" />
     </form>
+    <h1></h1>
+    <h1>Importar BDN</h1>
     <form action="/admin/import2/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form }}

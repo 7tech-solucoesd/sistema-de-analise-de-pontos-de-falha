@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
+import os,socket
 
-import os
+def get_ip():
+    a = socket.gethostbyname_ex(socket.gethostname())
+    d = a[2]
+    return str(d[0])
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +29,7 @@ SECRET_KEY = '!-ojm32^$06ub^dz5pr9y=)*&k49&^5%=b0u(8pfe4)^9-ou-1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [get_ip()]
 
 
 # Application definition

@@ -7,6 +7,8 @@ var Relatorio = {
 
     chartJuncData: [],
 
+    charts: {},
+
     onrender: function(){
 
         $('.active').removeClass('active');
@@ -105,31 +107,43 @@ var Relatorio = {
 
             var ctx = $('#'+el.name).get(0).getContext('2d');
 
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
+            if(typeof Relatorio.charts[el.name] === 'undefined'){ 
+                Relatorio.charts[el.name] = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(el.data),
+                        datasets: [{
+                            label: type,
+                            data: dados,
+                            backgroundColor: Helpers.poolColors(dados.length || 1)
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            } else{
+                Relatorio.charts[el.name].config.data =  {
                     labels: Object.keys(el.data),
                     datasets: [{
                         label: type,
                         data: dados,
                         backgroundColor: Helpers.poolColors(dados.length || 1)
                     }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
-                        }]
-                    }
                 }
-            });
+                Relatorio.charts[el.name].update();
+            }
 
         });
     },

@@ -118,6 +118,117 @@ $(function(){
                     });
                 });
 
+            } else{
+                setTimeout(() => {
+                    
+                    swal({
+                        title: 'Buscar por:',
+                        type: 'question',
+                        showCancelButton: true,
+                        showConfirmButton: true,
+                        confirmButtonText: 'Junções',
+                        cancelButtonText: 'BDNs',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#3085d6',
+                    }).then(result => {
+                        if(result.value){
+                            srcArr.forEach( (srcVal,i) => {
+                                Juncao.getJuncao(srcVal).then(function(res){
+            
+                                    $('.menu-busca').val('');
+            
+                                    Juncao.currentJuncao = JSON.parse(res);
+            
+                                    if(typeof Juncao.currentJuncao.error === 'undefined'){
+            
+                                        if(Juncao.arrIdJuncao.find( id => {
+                                            return Number(id) == Number(JSON.parse(res).vsatname.replace(/[^0-9]/g,''));
+                                        })){
+                                            return;
+                                        }
+            
+                                        Juncao.arrIdJuncao.push(Juncao.currentJuncao.vsatname.replace(/[^0-9]/g,''));
+            
+                                        Juncao.arrJuncao.push(JSON.parse(res));
+            
+                                        Juncao.showDados(JSON.parse(res));
+            
+                                    } else{
+                                        notFound.push(srcVal);
+                                    }
+            
+                                    if(notFound.length && i+1 === srcArr.length){
+                                        var text = '';
+                                        
+                                        notFound.forEach( e => {
+                                            text += e + ' ';
+                                        })
+                                        
+                                        swal({
+                                            title: 'ATENÇÃO!',
+                                            type: 'warning',
+                                            text: 'Não encontrados:' + text
+                                        })
+                                    }
+
+                                    if(i+1 === srcArr.length){
+                                        Relatorio.getRelatoriosJunc().then(function(){
+                                            setTimeout(function(){
+                                                Relatorio.updateCharts(Relatorio.chartJuncData, 'Junções');
+                                            },1000);
+                                        });
+                                    }
+            
+                                });
+                            });
+
+                        } else{
+                            srcArr.forEach( (srcVal,i) => {
+                                Equipamento.getEquipamento(srcVal).then(function(res){
+            
+                                    $('.menu-busca').val('');
+            
+                                    Equipamento.currentEquipamento = JSON.parse(res);
+            
+                                    if(typeof Equipamento.currentEquipamento.error === 'undefined'){
+            
+                                        if(Equipamento.arrIdEquipamento.find( id => {
+                                            return Number(id) == Number(JSON.parse(res).jc_BDN.replace(/[^0-9]/g,''));
+                                        })){
+                                            return;
+                                        }
+            
+                                        Equipamento.arrIdEquipamento.push(Equipamento.currentEquipamento.jc_BDN.replace(/[^0-9]/g,''));
+            
+                                        Equipamento.arrEquipamento.push(JSON.parse(res));
+            
+                                        Equipamento.showDados(JSON.parse(res));
+            
+                                    } else{
+                                        notFound.push(srcVal);
+                                    }
+            
+                                    if(notFound.length && i+1 === srcArr.length){
+                                        var text = '';
+                                        
+                                        notFound.forEach( e => {
+                                            text += e + ' ';
+                                        })
+                                        
+                                        swal({
+                                            title: 'ATENÇÃO!',
+                                            type: 'warning',
+                                            text: 'Não encontrados:' + text
+                                        })
+                                    }
+            
+                                });
+                            });
+                        }
+                    })
+
+                }, 500);
+
             }
 
         }

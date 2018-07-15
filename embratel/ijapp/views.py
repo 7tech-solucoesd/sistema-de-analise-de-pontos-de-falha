@@ -1,9 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import Juncao,BDN
 from .forms import FileForm
-
 
 @staff_member_required
 def get_file(request):
@@ -58,7 +57,7 @@ def get_file(request):
                 j.save()
                 # print(l)
                 # input()
-            return HttpResponse('/thanks/')
+            return redirect('/')
     else:
         form = FileForm()
 
@@ -111,7 +110,7 @@ def get_file_bdn(request):
                 j.IP = l[26]
                 # print(l)
                 j.save()
-            return HttpResponse('/thanks/')
+            return redirect('/')
     else:
         form = FileForm()
 

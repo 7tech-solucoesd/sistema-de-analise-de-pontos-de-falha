@@ -62,7 +62,7 @@ def get_juncaobdn(request, juncaobdn):
     # juncaobdn = juncaobdn[3:]
     print(juncaobdn)
     j = Juncao.objects.filter(
-        junserviço__contains='{}'.format(juncaobdn.zfill(5))).first()
+        junserviço__contains='{}'.format(juncaobdn.zfill(4))).first()
     if j is None:
         return HttpResponse(json.dumps({
             'error': 'Nao pertence a Primisys'
@@ -276,7 +276,7 @@ def filtra_bdn(request, funcao):
         for j in n_bdn:
             # j = j[3:]
             jun = Juncao.objects.filter(junserviço__contains='{}'.format(
-                str(j).zfill(5))).first()
+                str(j).zfill(4))).first()
             if jun is not None:
                 bdns.append(jun)
 

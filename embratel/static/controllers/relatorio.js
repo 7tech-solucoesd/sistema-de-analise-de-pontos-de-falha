@@ -11,6 +11,8 @@ var Relatorio = {
 
     onrender: function(){
 
+        Relatorio.charts = {};
+
         $('.active').removeClass('active');
         $('[data-page=relatorio]').addClass('active');
 

@@ -15,20 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from ijapp.views import get_file,get_file_bdn
+from ijapp.views import get_file
 from cjapp.views import (get_juncao, get_pontos_uf, get_pontos_ipgw,
-                         get_pontos_hub, get_pontos_category, get_pontos_dncc,
-                         index,get_BDN)
+                         get_juncaobdn_dncc,get_juncaobdn_hub,get_juncaobdn,
+                         get_juncaobdn_uf,get_juncaobdn_ipgw,get_juncaobdn_category,
+                         get_juncao_dncc,get_juncao_hub,
+                         get_pontos_category,index)
 
 urlpatterns = [
-    path('api/getpontosdncc', get_pontos_dncc),
+    # apis para pegar informaçoes juncao BDN
+    path('api/getjuncaobdncategory', get_juncaobdn_category),
+    path('api/getjuncaobdnipgw', get_juncaobdn_ipgw),
+    path('api/getjuncaobdnuf', get_juncaobdn_uf),
+    path('api/getjuncaobdndncc', get_juncaobdn_dncc),#feito
+    path('api/getjuncaobdnhub', get_juncaobdn_hub),#feito
+    path('api/getjuncaobdn/<juncaobdn>',get_juncaobdn),#feito
+    # apis para pegar informaçoes juncao agencia
     path('api/getpontoscategory', get_pontos_category),
-    path('api/getpontoshub', get_pontos_hub),
     path('api/getpontosipgw', get_pontos_ipgw),
     path('api/getpontosuf', get_pontos_uf),
-    path('api/getBDN/<bdn>',get_BDN),
+    path('api/getjuncaodncc', get_juncao_dncc),
+    path('api/getjuncaohub', get_juncao_hub),
     path('api/getjuncao/<juncao>', get_juncao),
-    path('admin/import2/', get_file_bdn),
+    # outros
     path('admin/import/', get_file),
     path('admin/', admin.site.urls),
     path('', index),

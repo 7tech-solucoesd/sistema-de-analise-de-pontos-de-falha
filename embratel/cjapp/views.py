@@ -1,6 +1,6 @@
 import json
 from django.http import HttpResponse
-from ijapp.models import Juncao,BDN
+from ijapp.models import Juncao
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -58,41 +58,48 @@ def get_juncao(request, juncao):
     }
     return HttpResponse(json.dumps(d))
 
-def get_BDN(request, bdn):
-    j = BDN.objects.filter(
-        jc_BDN__contains='{}'.format(bdn.zfill(5))).first()
+def get_juncaobdn(request, juncaobdn):
+    # juncaobdn = juncaobdn[3:]
+    print(juncaobdn)
+    j = Juncao.objects.filter(
+        junserviço__contains='{}'.format(juncaobdn.zfill(5))).first()
     if j is None:
         return HttpResponse(json.dumps({
             'error': 'Nao pertence a Primisys'
         }))
     d = {
-        'jc_agen': j.jc_agen,
-        'jc_BDN': j.jc_BDN,
-        'nome_BDN': j.nome_BDN,
+        'vsatname': j.vsatname,
+        'nmd': j.nmd,
+        'ender': j.ender,
+        'municipio': j.municipio,
         'UF': j.UF,
-        'meio_titular': j.meio_titular,
-        'backup': j.backup,
-        'id_num': j.id_num,
-        'ip_BDN': j.ip_BDN,
-        'masc_BDN': j.masc_BDN,
-        'gateway_BDN': j.gateway_BDN,
-        'loop_back': j.loop_back,
-        'VMAC': j.VMAC,
-        'ip_vlan_internet': j.ip_vlan_internet,
-        'categoria_bradesco': j.categoria_bradesco,
-        'juncao': j.juncao,
-        'vsat': j.vsat,
+        'junserviço': j.junserviço,
+        'compart': j.compart,
+        'desc': j.desc,
+        'nomeserv': j.nomeserv,
+        'fone': j.fone,
+        'primeid': j.primeid,
         'category': j.category,
         'serial': j.serial,
-        'IP': j.IP,
-        'DNCC': j.DNCC,
+        'softprof': j.softprof,
+        'devicetype': j.devicetype,
+        'ipmgmt': j.ipmgmt,
+        'iplan1': j.iplan1,
+        'mask': j.mask,
+        'servplan': j.servplan,
+        'AIS': j.AIS,
+        'OutrouteGroup': j.OutrouteGroup,
+        'FAP': j.FAP,
         'IPGW': j.IPGW,
-        'HUB': j.HUB,
-        'LoadBalance': j.LoadBalance,
-        'categori': j.categori,
-        'vsat': j.vsat,
-        'serial': j.serial,
-        'IP': j.IP,
+        'Ipipgw': j.Ipipgw,
+        'IQoS': j.IQoS,
+        'IQoSnum': j.IQoSnum,
+        'Enable': j.Enable,
+        'vadb': j.vadb,
+        'vadb1': j.vadb1,
+        'vadb2': j.vadb2,
+        'Enable': j.Enable,
+        'DDR': j.DDR,
     }
     return HttpResponse(json.dumps(d))
 
@@ -141,6 +148,34 @@ def get_pontos_category(request):
 
     return filtra_juncao(request, f)
 
+@csrf_exempt
+def get_juncao_dncc(request):
+
+    def f(juncoes):
+        dist = {}
+        for j in juncoes:
+            if j.IQoS in dist.keys():
+                dist[j.IQoS] += 1
+            else:
+                dist[j.IQoS] = 1
+        return dist
+
+    return filtra_juncao(request, f)
+
+@csrf_exempt
+def get_juncao_hub(request):
+
+    def f(juncoes):
+        dist = {}
+        for j in juncoes:
+            if j.OutrouteGroup in dist.keys():
+                dist[j.OutrouteGroup] += 1
+            else:
+                dist[j.OutrouteGroup] = 1
+        return dist
+
+    return filtra_juncao(request, f)
+
 
 def filtra_juncao(request, funcao):
     # print(request,end=" ---------------------")
@@ -161,32 +196,75 @@ def filtra_juncao(request, funcao):
         }
     return HttpResponse(json.dumps(d))
 
+#parte dos bdns
 
 @csrf_exempt
-def get_pontos_dncc(request):
+def get_juncaobdn_dncc(request):
 
     def f(bdns):
         dist = {}
         for j in bdns:
-            if j.DNCC in dist.keys():
-                dist[j.DNCC] += 1
+            if j.IQoS in dist.keys():
+                dist[j.IQoS] += 1
             else:
-                dist[j.DNCC] = 1
+                dist[j.IQoS] = 1
         return dist
 
     return filtra_bdn(request, f)
 
 
 @csrf_exempt
-def get_pontos_hub(request):
+def get_juncaobdn_hub(request):
 
     def f(bdns):
         dist = {}
         for j in bdns:
-            if j.HUB in dist.keys():
-                dist[j.HUB] += 1
+            if j.OutrouteGroup in dist.keys():
+                dist[j.OutrouteGroup] += 1
             else:
-                dist[j.HUB] = 1
+                dist[j.OutrouteGroup] = 1
+        return dist
+
+    return filtra_bdn(request, f)
+
+@csrf_exempt
+def get_juncaobdn_uf(request):
+
+    def f(bdns):
+        dist = {}
+        for j in bdns:
+            if j.UF in dist.keys():
+                dist[j.UF] += 1
+            else:
+                dist[j.UF] = 1
+        return dist
+
+    return filtra_bdn(request, f)
+
+@csrf_exempt
+def get_juncaobdn_category(request):
+
+    def f(bdns):
+        dist = {}
+        for j in bdns:
+            if j.category in dist.keys():
+                dist[j.category] += 1
+            else:
+                dist[j.category] = 1
+        return dist
+
+    return filtra_bdn(request, f)
+
+@csrf_exempt
+def get_juncaobdn_ipgw(request):
+
+    def f(bdns):
+        dist = {}
+        for j in bdns:
+            if j.IPGW in dist.keys():
+                dist[j.IPGW] += 1
+            else:
+                dist[j.IPGW] = 1
         return dist
 
     return filtra_bdn(request, f)
@@ -196,7 +274,8 @@ def filtra_bdn(request, funcao):
         n_bdn = json.loads(request.body.decode('utf-8'))
         bdns = []
         for j in n_bdn:
-            jun = BDN.objects.filter(jc_BDN__contains='{}'.format(
+            # j = j[3:]
+            jun = Juncao.objects.filter(junserviço__contains='{}'.format(
                 str(j).zfill(5))).first()
             if jun is not None:
                 bdns.append(jun)
@@ -208,3 +287,4 @@ def filtra_bdn(request, funcao):
             'dados': dist
         }
     return HttpResponse(json.dumps(d))
+

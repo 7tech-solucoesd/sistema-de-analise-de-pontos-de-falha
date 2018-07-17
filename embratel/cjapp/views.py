@@ -1,3 +1,4 @@
+# -- coding: utf-8 --
 import json
 from django.http import HttpResponse
 from ijapp.models import Juncao
@@ -14,10 +15,14 @@ def index (request):
     #return HttpResponse(template.render())
 
 
-
 def get_juncao(request, juncao):
+    # j = Juncao.objects.filter(
+    #     junserviço__contains='{}'.format(juncao)).first()
     j = Juncao.objects.filter(
-        vsatname__contains='{}'.format(juncao.zfill(4))).first()
+        junserviço__contains='{}'.format(juncao)).first()
+    print(str(j))
+    if(j is not None and len(j.junserviço) > 4):
+        j = None
     if j is None:
         return HttpResponse(json.dumps({
             'error': 'Nao pertence a Primisys'
@@ -59,10 +64,8 @@ def get_juncao(request, juncao):
     return HttpResponse(json.dumps(d))
 
 def get_juncaobdn(request, juncaobdn):
-    # juncaobdn = juncaobdn[3:]
-    print(juncaobdn)
     j = Juncao.objects.filter(
-        junserviço__contains='{}'.format(juncaobdn.zfill(4))).first()
+        junserviço__contains='{}'.format(juncaobdn)).first()
     if j is None:
         return HttpResponse(json.dumps({
             'error': 'Nao pertence a Primisys'
@@ -183,8 +186,10 @@ def filtra_juncao(request, funcao):
         n_juncoes = json.loads(request.body.decode('utf-8'))
         juncoes = []
         for j in n_juncoes:
-            jun = Juncao.objects.filter(vsatname__contains='{}'.format(
-                str(j).zfill(4))).first()
+            jun = Juncao.objects.filter(junserviço__contains='{}'.format(
+                str(j))).first()
+            if(jun is not None and len(jun.junserviço) > 4):
+                jun.junserviço = None
             if jun is not None:
                 juncoes.append(jun)
 
@@ -274,9 +279,10 @@ def filtra_bdn(request, funcao):
         n_bdn = json.loads(request.body.decode('utf-8'))
         bdns = []
         for j in n_bdn:
-            # j = j[3:]
+            j = "30/" + j
+            print(j)
             jun = Juncao.objects.filter(junserviço__contains='{}'.format(
-                str(j).zfill(4))).first()
+                str(j))).first()
             if jun is not None:
                 bdns.append(jun)
 

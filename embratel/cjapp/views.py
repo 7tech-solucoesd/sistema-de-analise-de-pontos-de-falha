@@ -63,8 +63,14 @@ def get_juncao(request, juncao):
     return HttpResponse(json.dumps(d))
 
 def get_juncaobdn(request, juncaobdn):
+    tamanho = len(juncaobdn)
+    print(len(juncaobdn))
+    
+    juncaobdn = "30/" + (juncaobdn.zfill(5 - tamanho))
+    print(juncaobdn)
     j = Juncao.objects.filter(
         junserviço__contains='{}'.format(juncaobdn)).first()
+    
     if j is None:
         return HttpResponse(json.dumps({
             'error': 'Nao pertence a Primisys'

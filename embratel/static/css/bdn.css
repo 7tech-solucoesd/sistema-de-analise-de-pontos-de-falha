@@ -1,33 +1,33 @@
-.equip-div{
+.bdn-div{
     overflow: auto;
     margin-top: 15px;
     max-height: calc(100vh - 230px);
 }
 
-.equipamento{
+.bdn{
     border: 1px solid #000;
     margin: 5px 0px;
     width: 100%;
     white-space: nowrap;
 }
 
-.equipamento div[data-key]{
+.bdn div[data-key]{
     display: inline-block;
     vertical-align: top;
 }
 
 
-.equipamento td div{
+.bdn td div{
     padding: 5px;
 }
 
-.equipamento td[data-key] .head{
+.bdn td[data-key] .head{
     background: #355c9f;
     color: #fff;
     border: 1px solid #000;
 }
 
-.equipamento td[data-key] .content{
+.bdn td[data-key] .content{
     background: #fff;
     color: #000;
     border: 1px solid #000;

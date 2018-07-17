@@ -17,6 +17,14 @@ var Helpers = {
         var g = Math.floor(Math.random() * 255);
         var b = Math.floor(Math.random() * 255);
         return "rgb(" + r + "," + g + "," + b + ", 0.6)";
+    },
+
+    getBdnServ: function(bdn){
+        var serv = bdn.split('/');
+
+        if(serv.length > 1)
+            return serv[1];
+        else return bdn;
     }
 
 }

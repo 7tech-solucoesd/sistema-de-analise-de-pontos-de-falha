@@ -4,13 +4,13 @@ var Default = {
         var page = $('body').attr('page');
     
         switch(page){
-            case 'juncao':
-                Juncao.arrIdJuncao = [];
-                Juncao.arrJuncao = [];
+            case 'agencia':
+                Agencia.arrIdAgencia = [];
+                Agencia.arrAgencia = [];
             break;
-            case 'equipamento':
-                Equipamento.arrEquipamento = [];
-                Equipamento.arrIdEquipamento = [];
+            case 'bdn':
+                Bdn.arrBdn = [];
+                Bdn.arrIdBdn = [];
             break;
         }
         $('tr').remove();
@@ -20,39 +20,39 @@ var Default = {
 
 $(function(){
 
-    Page.get('juncao');
+    Page.get('agencia');
 
     $('.menu-busca').on('keydown', function(e){
 
         if(e.keyCode===13){
 
-            var srcArr = $('.menu-busca').val().split(/[^0-9]/);
+            var srcArr = $('.menu-busca').val().split(/[^0-9\/]/);
 
             var notFound = [];
 
             var page = $('body').attr('page');
 
-            if(page === 'juncao'){
+            if(page === 'agencia'){
                 srcArr.forEach( (srcVal,i) => {
-                    Juncao.getJuncao(srcVal).then(function(res){
+                    Agencia.getAgencia(srcVal).then(function(res){
 
                         $('.menu-busca').val('');
 
-                        Juncao.currentJuncao = JSON.parse(res);
+                        Agencia.currentAgencia = JSON.parse(res);
 
-                        if(typeof Juncao.currentJuncao.error === 'undefined'){
+                        if(typeof Agencia.currentAgencia.error === 'undefined'){
 
-                            if(Juncao.arrIdJuncao.find( id => {
-                                return Number(id) == Number(JSON.parse(res).vsatname.replace(/[^0-9]/g,''));
+                            if(Agencia.arrIdAgencia.find( id => {
+                                return Number(id) == Number(JSON.parse(res).junserviço.replace(/[^0-9]/g,''));
                             })){
                                 return;
                             }
 
-                            Juncao.arrIdJuncao.push(Juncao.currentJuncao.vsatname.replace(/[^0-9]/g,''));
+                            Agencia.arrIdAgencia.push(Agencia.currentAgencia.junserviço.replace(/[^0-9]/g,''));
 
-                            Juncao.arrJuncao.push(JSON.parse(res));
+                            Agencia.arrAgencia.push(JSON.parse(res));
 
-                            Juncao.showDados(JSON.parse(res));
+                            Agencia.showDados(JSON.parse(res));
 
                         } else{
                             notFound.push(srcVal);
@@ -74,28 +74,28 @@ $(function(){
 
                     });
                 });
-            } else if(page === 'equipamento'){
+            } else if(page === 'bdn'){
 
                 srcArr.forEach( (srcVal,i) => {
-                    Equipamento.getEquipamento(srcVal).then(function(res){
+                    Bdn.getBdn(Helpers.getBdnServ(srcVal)).then(function(res){
 
                         $('.menu-busca').val('');
 
-                        Equipamento.currentEquipamento = JSON.parse(res);
+                        Bdn.currentBdn = JSON.parse(res);
 
-                        if(typeof Equipamento.currentEquipamento.error === 'undefined'){
+                        if(typeof Bdn.currentBdn.error === 'undefined'){
 
-                            if(Equipamento.arrIdEquipamento.find( id => {
-                                return Number(id) == Number(JSON.parse(res).jc_BDN.replace(/[^0-9]/g,''));
+                            if(Bdn.arrIdBdn.find( id => {
+                                return Number(id) == Number(Helpers.getBdnServ(JSON.parse(res).junserviço));
                             })){
                                 return;
                             }
 
-                            Equipamento.arrIdEquipamento.push(Equipamento.currentEquipamento.jc_BDN.replace(/[^0-9]/g,''));
+                            Bdn.arrIdBdn.push(Helpers.getBdnServ(Bdn.currentBdn.junserviço));
 
-                            Equipamento.arrEquipamento.push(JSON.parse(res));
+                            Bdn.arrBdn.push(JSON.parse(res));
 
-                            Equipamento.showDados(JSON.parse(res));
+                            Bdn.showDados(JSON.parse(res));
 
                         } else{
                             notFound.push(srcVal);
@@ -126,105 +126,12 @@ $(function(){
                         type: 'question',
                         showCancelButton: true,
                         showConfirmButton: true,
-                        confirmButtonText: 'Junções',
+                        confirmButtonText: 'Agências',
                         cancelButtonText: 'BDNs',
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#3085d6',
                     }).then(result => {
-                        if(result.value){
-                            srcArr.forEach( (srcVal,i) => {
-                                Juncao.getJuncao(srcVal).then(function(res){
-            
-                                    $('.menu-busca').val('');
-            
-                                    Juncao.currentJuncao = JSON.parse(res);
-            
-                                    if(typeof Juncao.currentJuncao.error === 'undefined'){
-            
-                                        if(Juncao.arrIdJuncao.find( id => {
-                                            return Number(id) == Number(JSON.parse(res).vsatname.replace(/[^0-9]/g,''));
-                                        })){
-                                            return;
-                                        }
-            
-                                        Juncao.arrIdJuncao.push(Juncao.currentJuncao.vsatname.replace(/[^0-9]/g,''));
-            
-                                        Juncao.arrJuncao.push(JSON.parse(res));
-            
-                                        Juncao.showDados(JSON.parse(res));
-            
-                                    } else{
-                                        notFound.push(srcVal);
-                                    }
-            
-                                    if(notFound.length && i+1 === srcArr.length){
-                                        var text = '';
-                                        
-                                        notFound.forEach( e => {
-                                            text += e + ' ';
-                                        })
-                                        
-                                        swal({
-                                            title: 'ATENÇÃO!',
-                                            type: 'warning',
-                                            text: 'Não encontrados:' + text
-                                        })
-                                    }
-
-                                    if(i+1 === srcArr.length){
-                                        Relatorio.getRelatoriosJunc().then(function(){
-                                            setTimeout(function(){
-                                                Relatorio.updateCharts(Relatorio.chartJuncData, 'Junções');
-                                            },1000);
-                                        });
-                                    }
-            
-                                });
-                            });
-
-                        } else{
-                            srcArr.forEach( (srcVal,i) => {
-                                Equipamento.getEquipamento(srcVal).then(function(res){
-            
-                                    $('.menu-busca').val('');
-            
-                                    Equipamento.currentEquipamento = JSON.parse(res);
-            
-                                    if(typeof Equipamento.currentEquipamento.error === 'undefined'){
-            
-                                        if(Equipamento.arrIdEquipamento.find( id => {
-                                            return Number(id) == Number(JSON.parse(res).jc_BDN.replace(/[^0-9]/g,''));
-                                        })){
-                                            return;
-                                        }
-            
-                                        Equipamento.arrIdEquipamento.push(Equipamento.currentEquipamento.jc_BDN.replace(/[^0-9]/g,''));
-            
-                                        Equipamento.arrEquipamento.push(JSON.parse(res));
-            
-                                        Equipamento.showDados(JSON.parse(res));
-            
-                                    } else{
-                                        notFound.push(srcVal);
-                                    }
-            
-                                    if(notFound.length && i+1 === srcArr.length){
-                                        var text = '';
-                                        
-                                        notFound.forEach( e => {
-                                            text += e + ' ';
-                                        })
-                                        
-                                        swal({
-                                            title: 'ATENÇÃO!',
-                                            type: 'warning',
-                                            text: 'Não encontrados:' + text
-                                        })
-                                    }
-            
-                                });
-                            });
-                        }
+                        
                     })
 
                 }, 500);

@@ -1,3 +1,4 @@
+# -- coding: utf-8 --
 """embratel URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -24,7 +25,7 @@ from cjapp.views import (get_juncao, get_pontos_uf, get_pontos_ipgw,
 
 urlpatterns = [
     # apis para pegar informaçoes juncao BDN
-    path('api/getjuncaobdncategory', get_juncaobdn_category),
+    #path('api/getjuncaobdncategory', get_juncaobdn_category),
     path('api/getjuncaobdnipgw', get_juncaobdn_ipgw),
     path('api/getjuncaobdnuf', get_juncaobdn_uf),
     path('api/getjuncaobdndncc', get_juncaobdn_dncc),#feito

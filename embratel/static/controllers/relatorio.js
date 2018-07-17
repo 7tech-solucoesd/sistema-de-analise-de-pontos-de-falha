@@ -1,11 +1,23 @@
 var Relatorio = {
 
-    juncUrls: [{name:'categ', url:'api/getpontoscategory'},
-    {name:'ipgw', url:'api/getpontosipgw'},{name:'uf', url:'api/getpontosuf'}],
+    agnUrls: [
+        {name:'agn-categ', url:'api/getpontoscategory'},
+        {name:'agn-ipgw', url:'api/getpontosipgw'},
+        {name:'agn-uf', url:'api/getpontosuf'},
+        {name:'agn-dncc', url:'api/getjuncaodncc'},
+        {name:'agn-hub', url:'api/getjuncaohub'}
+    ],
 
-    eqpUrls:[{name:'dncc', url:'api/getpontosdncc'},{name:'hub',url:'api/getpontoshub'}],
+    bdnUrls:[
+        {name:'bdn-dncc', url:'api/getjuncaobdndncc'},
+        {name:'bdn-hub',url:'api/getjuncaobdnhub'},
+        {name:'bdn-uf', url:'api/getjuncaobdnuf'},
+        {name:'bdn-ipgw', url:'api/getjuncaobdnipgw'},
+    ],
 
     chartJuncData: [],
+
+    chartBdnData: [],
 
     charts: {},
 
@@ -18,7 +30,7 @@ var Relatorio = {
 
         Relatorio.getRelatoriosJunc().then(function(){
             setTimeout(function(){
-                Relatorio.updateCharts(Relatorio.chartJuncData, 'Junções');
+                Relatorio.updateCharts(Relatorio.chartJuncData, 'Agências');
             },1000);
         });
 
@@ -35,9 +47,9 @@ var Relatorio = {
         Relatorio.chartJuncData = [];
 
         return new Promise(function(resolve, reject){
-            Relatorio.juncUrls.forEach((el,index) => {
+            Relatorio.agnUrls.forEach((el,index) => {
                 
-                Relatorio.request(el.url, Juncao.arrIdJuncao).then(res => {
+                Relatorio.request(el.url, Agencia.arrIdAgencia).then(res => {
                     
                     Relatorio.chartJuncData.push({
                         name: el.name,
@@ -45,11 +57,11 @@ var Relatorio = {
                         total: JSON.parse(res).total
                     });
 
-                    if(index+1 === Relatorio.juncUrls.length) resolve();
+                    if(index+1 === Relatorio.agnUrls.length) resolve();
 
                 }).catch(error => {
 
-                    if(index+1 === Relatorio.juncUrls.length) resolve();
+                    if(index+1 === Relatorio.agnUrls.length) resolve();
 
                     console.error(error);
                 })
@@ -64,9 +76,9 @@ var Relatorio = {
         Relatorio.chartBdnData = [];
 
         return new Promise(function(resolve, reject){
-            Relatorio.eqpUrls.forEach((el,index) => {
+            Relatorio.bdnUrls.forEach((el,index) => {
                 
-                Relatorio.request(el.url, Equipamento.arrIdEquipamento).then(res => {
+                Relatorio.request(el.url, Bdn.arrIdBdn).then(res => {
                     
                     Relatorio.chartBdnData.push({
                         name: el.name,
@@ -74,11 +86,11 @@ var Relatorio = {
                         total: JSON.parse(res).total
                     });
 
-                    if(index+1 === Relatorio.eqpUrls.length) resolve();
+                    if(index+1 === Relatorio.bdnUrls.length) resolve();
 
                 }).catch(error => {
 
-                    if(index+1 === Relatorio.eqpUrls.length) resolve();
+                    if(index+1 === Relatorio.bdnUrls.length) resolve();
 
                     console.error(error);
                 })
@@ -107,7 +119,7 @@ var Relatorio = {
                 dados.push(el.data[e]);
             });
 
-            var ctx = $('#'+el.name).get(0).getContext('2d');
+            var ctx = $('#' + el.name).get(0).getContext('2d');
 
             if(typeof Relatorio.charts[el.name] === 'undefined'){ 
                 Relatorio.charts[el.name] = new Chart(ctx, {

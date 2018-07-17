@@ -1,38 +1,38 @@
-.juncao-div{
+.agencia-div{
     overflow: auto;
     margin-top: 15px;
     max-height: calc(100vh - 230px);
 }
 
-.juncao{
+.agencia{
     border: 1px solid #000;
     margin: 5px 0px;
     width: 100%;
     white-space: nowrap;
 }
 
-.juncao div[data-key]{
+.agencia div[data-key]{
     display: inline-block;
     vertical-align: top;
 }
 
-/*.juncao div[data-key=vsatname]{
+/*.agencia div[data-key=vsatname]{
     width: 100%;
     text-align: center;
 }*/
 
 
-.juncao td div{
+.agencia td div{
     padding: 5px;
 }
 
-.juncao td[data-key] .head{
+.agencia td[data-key] .head{
     background: #355c9f;
     color: #fff;
     border: 1px solid #000;
 }
 
-.juncao td[data-key] .content{
+.agencia td[data-key] .content{
     background: #fff;
     color: #000;
     border: 1px solid #000;

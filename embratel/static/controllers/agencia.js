@@ -1,27 +1,27 @@
-var Juncao = {
+var Agencia = {
 	
-	currentJuncao: {},
+	currentAgencia: {},
 
-	arrJuncao: [],
+	arrAgencia: [],
 
-	arrIdJuncao: [],
+	arrIdAgencia: [],
 
 	onrender: function(){
 
 		$('.active').removeClass('active');
-        $('[data-page=juncao]').addClass('active');
+        $('[data-page=agencia]').addClass('active');
 
-		if(Juncao.arrJuncao.length || Juncao.arrIdJuncao.length){
+		if(Agencia.arrAgencia.length || Agencia.arrIdAgencia.length){
 			$('.initial-text').hide();
 		}
 
-		Juncao.renderJuncoes();
+		Agencia.renderAgencia();
 
 	},
 
-	renderJuncoes: function(){
-		Juncao.arrJuncao.forEach(juncao => {
-			Juncao.showDados(juncao);
+	renderAgencia: function(){
+		Agencia.arrAgencia.forEach(agn => {
+			Agencia.showDados(agn);
 		});
 	},
 
@@ -30,7 +30,7 @@ var Juncao = {
 	 * @param {String} id String contendo o id da junção
 	 * @return {Functino} retorna a requisição
 	 */
-	getJuncao: function(id){
+	getAgencia: function(id){
 
 		id = id || $('.menu-busca').val();
 
@@ -44,22 +44,22 @@ var Juncao = {
 	 * showDados Função que exibe os dados da junção na tela
 	 * @param {Number} juncao id da junção que será exibida
 	 */
-	showDados: function(juncao){
+	showDados: function(agn){
 		$('.initial-text').hide();
 		$('.clear-all').show();
-		var html = $('<tr data-juncao="' + juncao.junserviço + '" class="juncao">\
+		var html = $('<tr data-agencia="' + agn.junserviço + '" class="agencia">\
 			\
 		</tr>');
 
-		Object.keys(juncao).forEach(function(key){
+		Object.keys(agn).forEach(function(key){
 			
 			if(key === 'Enable' || key === 'vadb' || key === 'vadb1' || key === 'vadb2' || key === 'DDR') return;
 
-			html.append('<td data-key="' + key + '"><div class="head">' + key + '</div><div class="content">' + juncao[key] +'&nbsp; </div></td>');
+			html.append('<td data-key="' + key + '"><div class="head">' + key + '</div><div class="content">' + agn[key] +'&nbsp; </div></td>');
 
 		});
 
-		$('.show-juncoes').append(html);;
+		$('.show-agencia').append(html);;
 
 	}
 	

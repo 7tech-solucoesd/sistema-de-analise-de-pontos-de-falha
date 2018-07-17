@@ -1,3 +1,5 @@
+# -- coding: utf-8 --
+import threading
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.admin.views.decorators import staff_member_required
@@ -55,7 +57,7 @@ def get_file(request):
                 j.DDR = l[31]
 
                 j.save()
-                print(l)
+                # print(l)
                 # input()
             return redirect('/')
     else:

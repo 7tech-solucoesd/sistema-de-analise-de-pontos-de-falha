@@ -132,6 +132,110 @@ $(function(){
                         cancelButtonColor: '#3085d6',
                     }).then(result => {
                         
+                        if(result.value){
+                            srcArr.forEach( (srcVal,i) => {
+                                Agencia.getAgencia(srcVal).then(function(res){
+            
+                                    $('.menu-busca').val('');
+            
+                                    Agencia.currentAgencia = JSON.parse(res);
+            
+                                    if(typeof Agencia.currentAgencia.error === 'undefined'){
+            
+                                        if(Agencia.arrIdAgencia.find( id => {
+                                            return Number(id) == Number(JSON.parse(res).junserviço.replace(/[^0-9]/g,''));
+                                        })){
+                                            return;
+                                        }
+            
+                                        Agencia.arrIdAgencia.push(Agencia.currentAgencia.junserviço.replace(/[^0-9]/g,''));
+            
+                                        Agencia.arrAgencia.push(JSON.parse(res));
+            
+                                        Agencia.showDados(JSON.parse(res));
+            
+                                    } else{
+                                        notFound.push(srcVal);
+                                    }
+            
+                                    if(notFound.length && i+1 === srcArr.length){
+                                        var text = '';
+                                        
+                                        notFound.forEach( e => {
+                                            text += e + ' ';
+                                        })
+                                        
+                                        swal({
+                                            title: 'ATENÇÃO!',
+                                            type: 'warning',
+                                            text: 'Não encontrados:' + text
+                                        })
+                                    }
+
+                                    if(i+1 === srcArr.length){
+                                        Relatorio.getRelatoriosJunc().then(function(){
+                                            setTimeout(function(){
+                                                Relatorio.updateCharts(Relatorio.chartJuncData, 'Agências');
+                                            },1000);
+                                        });
+                                    }
+            
+                                });
+                            });
+                        } else{
+
+                            srcArr.forEach( (srcVal,i) => {
+                                Bdn.getBdn(Helpers.getBdnServ(srcVal)).then(function(res){
+            
+                                    $('.menu-busca').val('');
+            
+                                    Bdn.currentBdn = JSON.parse(res);
+            
+                                    if(typeof Bdn.currentBdn.error === 'undefined'){
+            
+                                        if(Bdn.arrIdBdn.find( id => {
+                                            return Number(id) == Number(Helpers.getBdnServ(JSON.parse(res).junserviço));
+                                        })){
+                                            return;
+                                        }
+            
+                                        Bdn.arrIdBdn.push(Helpers.getBdnServ(Bdn.currentBdn.junserviço));
+            
+                                        Bdn.arrBdn.push(JSON.parse(res));
+            
+                                        Bdn.showDados(JSON.parse(res));
+            
+                                    } else{
+                                        notFound.push(srcVal);
+                                    }
+            
+                                    if(notFound.length && i+1 === srcArr.length){
+                                        var text = '';
+                                        
+                                        notFound.forEach( e => {
+                                            text += e + ' ';
+                                        })
+                                        
+                                        swal({
+                                            title: 'ATENÇÃO!',
+                                            type: 'warning',
+                                            text: 'Não encontrados:' + text
+                                        })
+                                    }
+
+                                    if(i+1 === srcArr.length){
+                                        Relatorio.getRelatoriosBdn().then(function(){
+                                            setTimeout(function(){
+                                                Relatorio.updateCharts(Relatorio.chartBdnData, 'BDNs');
+                                            },1000);
+                                        });
+                                    }
+            
+                                });
+                            });
+
+                        }
+
                     })
 
                 }, 500);

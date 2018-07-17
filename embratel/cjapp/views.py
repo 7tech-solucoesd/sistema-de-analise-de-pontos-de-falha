@@ -16,11 +16,10 @@ def index (request):
 
 
 def get_juncao(request, juncao):
-    # j = Juncao.objects.filter(
-    #     junserviço__contains='{}'.format(juncao)).first()
+    print(juncao)
+    print(juncao.zfill(4))
     j = Juncao.objects.filter(
-        junserviço__contains='{}'.format(juncao)).first()
-    print(str(j))
+        junserviço__contains='{}'.format(juncao.zfill(4))).first()
     if(j is not None and len(j.junserviço) > 4):
         j = None
     if j is None:
@@ -187,7 +186,7 @@ def filtra_juncao(request, funcao):
         juncoes = []
         for j in n_juncoes:
             jun = Juncao.objects.filter(junserviço__contains='{}'.format(
-                str(j))).first()
+                str(j).zfill(4))).first()
             if(jun is not None and len(jun.junserviço) > 4):
                 jun.junserviço = None
             if jun is not None:

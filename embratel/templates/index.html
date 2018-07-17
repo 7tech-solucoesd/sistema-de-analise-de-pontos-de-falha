@@ -4,9 +4,9 @@
 	<head>
 		<title>EMBRATEL</title>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'css/juncao.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/agencia.css' %}" />
 		<link rel="stylesheet" type="text/css" href="{% static 'css/relatorio.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'css/equipamento.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bdn.css' %}" />
 		<meta charset="UTF-8" />
 	</head>
 	<body>
@@ -20,8 +20,8 @@
 					<div class="menu-input">
 						<input type="text" name="busca" class="menu-busca" placeholder="Pesquisa rápida por Unidades, serviços, etc." />
 					</div>
-					<div data-page="juncao" onclick="Page.get('juncao')" class="menu-item active" >Junções</div>
-					<div data-page="equipamento" onclick="Page.get('equipamento')" class="menu-item" >Equipamentos</div>
+					<div data-page="agencia" onclick="Page.get('agencia')" class="menu-item active" >Agências</div>
+					<div data-page="bdn" onclick="Page.get('bdn')" class="menu-item" >BDN</div>
 					<div data-page="relatorio" onclick="Page.get('relatorio')" class="menu-item" >Relatórios</div>
 				</div>
 			</div>
@@ -36,8 +36,8 @@
 		<script src="{% static 'js/default.js' %}"></script>
 		<script src="{% static 'js/page.js' %}"></script>
 		<script src="{% static 'js/helpers.js' %}"></script>
-		<script src="{% static 'controllers/equipamento.js' %}"></script>
-		<script src="{% static 'controllers/juncao.js' %}"></script>
+		<script src="{% static 'controllers/bdn.js' %}"></script>
+		<script src="{% static 'controllers/agencia.js' %}"></script>
 		<script src="{% static 'controllers/relatorio.js' %}"></script>
 	</body>
 </html>

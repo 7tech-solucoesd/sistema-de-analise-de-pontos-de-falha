@@ -28,7 +28,7 @@ def get_file(request):
                 j.ender = l[2]
                 j.municipio = l[3]
                 j.UF = l[4]
-                j.junserviço = l[5]
+                j.junserviço = l[5].zfill(4)
                 j.compart = l[6]
                 j.desc = l[7]
                 j.nomeserv = l[8]
@@ -57,7 +57,7 @@ def get_file(request):
                 j.DDR = l[31]
 
                 j.save()
-                # print(l)
+                print(l)
                 # input()
             return redirect('/')
     else:
